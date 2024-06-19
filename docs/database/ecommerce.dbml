@@ -1,0 +1,215 @@
+////////////////////////////
+// 1) Shop //
+////////////////////////////
+
+TableGroup warehouse {
+  warehouse.Product
+  warehouse.ProductGallery
+  warehouse.Pack
+  warehouse.Tag
+  warehouse.Brand
+  warehouse.Category
+  warehouse.Attribute_Value
+}
+
+Table warehouse.Product as Prod {
+  id int [pk, increment]
+  sku varchar [unique, not null]
+  slug varchar [unique, not null]
+  title varchar [not null]
+  subtitle varchar
+  can_review bool [default: false]
+  is_active bool [default: true]
+  suggested_products int [ref: <> Prod.id]
+  related_products int [ref: <> Prod.id]
+  brand_id int [ref: > Brand.id]
+  category_id int [ref: > Cat.id]
+  tags int [ref: <> Tag.id]
+  min_purchase int [default: 1]
+  max_purchase int [default: 1]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.ProductGallery as ProdGallery {
+  id int [pk, increment]
+  product_id int [ref: > Prod.id]
+  is_default bool [default: false]
+  picture file [not null]
+  width int
+  height int
+  alternate_text varchar
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.Pack {
+  id int [pk, increment]
+  sku varchar [unique, not null]
+  price decimal(10, 2) [not null]
+  buy_price decimal(10, 2) [not null]
+  stock int [not null]
+  actual_stock int [not null]
+  is_active bool [default: true]
+  is_default bool [default: false]
+  description text
+  product_id int [ref: > Prod.id]
+  att_val_ids array [ref: <> Att.id]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.Tag as Tag {
+  id int [pk, increment]
+  title varchar [unique, not null]
+  slug varchar [unique, not null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.Brand as Brand {
+  id int [pk, increment]
+  title varchar [not null]
+  slug varchar [unique, not null]
+  subtitle varchar
+  picture file
+  is_active bool [default: true]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.Category as Cat {
+  id int [pk, increment]
+  title varchar [not null]
+  slug varchar [unique, not null]
+  is_active bool [default: true]
+  is_downloadable bool [default: false]
+  parent_id int [ref: > Cat.id, null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table warehouse.Attribute_Value as Att {
+  id int [pk, increment]
+  parent_id int [ref: < Att.id, null]
+  attval_title varchar [unique, not null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+////////////////////////////
+// 2) Customer //
+////////////////////////////
+
+TableGroup customer {
+  customer.user
+  customer.perprofile
+  customer.corprofile
+  customer.address
+}
+
+Table customer.user as CU {
+  id int [pk, increment]
+  username varchar(50) [unique, not null]
+  password varchar [not null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table customer.perprofile as CPP {
+  id int [pk, increment]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  NationalCode varchar(10) [unique, not null]
+  gender enum('male', 'female')
+  phone varchar(20) [unique, not null]
+  birth_date date
+  job varchar(50)
+  customer_user_id int [ref: > CU.id]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table customer.corprofile as CCP {
+  id int [pk, increment]
+  Name varchar(100) [not null]
+  NationalCode varchar(10) [unique, not null]
+  Register_number varchar(50) [unique, not null]
+  EconomialCode varchar(20)
+  phone varchar(20) [unique, not null]
+  customer_user_id int [ref: > CU.id]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table customer.address as CA {
+  address_id int [pk, increment]
+  address_line_1 varchar(255) [not null]
+  address_line_2 varchar(255)
+  city varchar(50) [not null]
+  state varchar(50) [not null]
+  zip_code varchar(10) [not null]
+  country varchar(50) [not null]
+  customer_corprofile_id int [ref: > CCP.id, null]
+  customer_perprofile_id int [ref: > CPP.id, null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+////////////////////////////
+// 3) Basket //
+////////////////////////////
+
+TableGroup basket {
+  basket.Cart
+  basket.CartItem
+  basket.OrderAddresses
+  basket.Orders
+}
+
+Table basket.Cart as Cart {
+  id int [pk, increment]
+  user_id int [ref: > CU.id]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+table basket.CartItem as CartItem {
+  id int [pk, increment]
+  cart_id int [ref: > Cart.id]
+  pack_id int [ref: > warehouse.Pack.id]
+  quantity int [not null]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table basket.OrderAddresses as OrderAddresses {
+  id int [pk, increment]
+  title varchar
+  country varchar [not null]
+  province varchar
+  city varchar [not null]
+  postal_address text
+  postal_code varchar
+  house_number varchar
+  building_unit varchar
+  footnote text
+  receiver_first_name varchar
+  receiver_last_name varchar
+  receiver_phone_number varchar
+  receiver_national_code varchar
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
+
+Table basket.Orders as Orders {
+  id int [pk, increment]
+  transaction_number varchar [unique, not null]
+  total_price decimal(10, 2) [not null]
+  status enum('submitted', 'packing', 'cargo_line', 'sent', 'delivered') [default: 'submitted']
+  order_address_id int [ref: > OrderAddresses.id]
+  user_id int [ref: > CU.id]
+  cart_id int [ref: > Cart.id]
+  created timestamp [default: `now()`]
+  modified timestamp [default: `now()`]
+}
