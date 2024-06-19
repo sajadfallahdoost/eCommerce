@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'warehouse',
     'shop',
     'account',
+    'painless'
 ]
 
 MIDDLEWARE = [
