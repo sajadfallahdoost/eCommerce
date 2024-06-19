@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: Backend
+      POSTGRES_USER: Backend_user
+      POSTGRES_PASSWORD: sdjnnfejsajad3574nndfkd
+    ports:
+      - "5432:5432"
+
+  django:
+    build: .
+    command: /code/entrypoint.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: Backend
+      DB_USER: Backend_user
+      DB_PASSWORD: sdjnnfejsajad3574nndfkd
+      DB_HOST: db
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_EMAIL: admin@example.com
+      DJANGO_SUPERUSER_PASSWORD: 1234
