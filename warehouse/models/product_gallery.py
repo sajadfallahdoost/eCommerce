@@ -20,7 +20,7 @@ class ProductGallery(PictureOperationAbstract, TimestampMixin, TitleSlugMixin):
     )
 
     picture = models.ImageField(
-        upload_to='product_pictures/',
+        upload_to='media/uploads/product_pictures/',
         verbose_name=_("Picture")
     )
 

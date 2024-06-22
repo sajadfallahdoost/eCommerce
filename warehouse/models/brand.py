@@ -13,7 +13,7 @@ class Brand(TimestampMixin, TitleSlugMixin):
     )
 
     picture = models.ImageField(
-        upload_to='brand_pictures/',
+        upload_to='media/uploads/brand_pictures/',
         blank=True,
         null=True,
         verbose_name=_("Picture")
