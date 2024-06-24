@@ -1,0 +1,3 @@
+from .address import AddressSerializer
+from .corporateprofile import CorporateProfileSerializer
+from .personal_profile import PersonalProfileSerializer
