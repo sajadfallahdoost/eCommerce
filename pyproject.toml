@@ -17,6 +17,8 @@ pytz = "^2024.1"
 djangorestframework = "^3.15.2"
 markdown = "^3.6"
 django-filter = "^24.2"
+pyotp = "^2.9.0"
+django-extensions = "^3.2.3"
 
 
 [build-system]

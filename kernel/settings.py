@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-awdik+&kt%p(yi)z7-#x49^-+%y%)62va^b$1#3^00y$1dcl_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'account',
     'painless',
     'rest_framework',
+    # 'services',
+    # 'services.otp',
+    'django_extensions',
     # 'django_filters',
     # 'drf_yasg',
 ]
@@ -153,3 +156,11 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ],
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'amieseansi@gmail.com'
+EMAIL_HOST_PASSWORD = 'qblg uvce gdzg frzc'
