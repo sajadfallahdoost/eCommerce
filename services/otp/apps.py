@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class OtpConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = "services.otp"
+    label = "services_otp"
