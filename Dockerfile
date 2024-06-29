@@ -4,7 +4,7 @@ FROM python:3.12
 ENV PYTHONUNBUFFERED=1 \
     POETRY_VERSION=1.5.1
 
-WORKDIR .
+WORKDIR /code
 
 # Install poetry
 RUN pip install "poetry==$POETRY_VERSION"
@@ -21,8 +21,6 @@ COPY . /code/
 
 # Verify the presence of entrypoint.sh and show its content
 RUN ls -la /code/entrypoint.sh && cat /code/entrypoint.sh
-
-EXPOSE 8000
 
 # Give execution rights on the entrypoint script
 RUN chmod +x /code/entrypoint.sh
