@@ -211,3 +211,31 @@ class WarehouseDataGenerator(BaseDataGenerator):
             pack.att_val_ids.set(random.sample(attribute_values, k=min(3, len(attribute_values))))
 
         return created_packs
+
+    def create_tags(self, total: int = 200, batch_size: int = 10, disable_progress_bar: bool = False) -> List[Tag]:
+        """
+        Generate and create fake tags.
+
+        Args:
+            total (int): The total number of tags to create. Default is 200.
+            batch_size (int): The number of tags to create per batch. Default is 10.
+            disable_progress_bar (bool): Disable the tqdm progress bar. Default is False.
+
+        Returns:
+            List[Tag]: A list of created tags.
+        """
+
+        tags = [
+            Tag(
+                title=self.get_random_words(2),
+                slug=slugify(self.get_random_words(2)),
+            )
+            for _ in tqdm(range(total), disable=disable_progress_bar)
+        ]
+
+        created_tags = []
+        for i in range(0, len(tags), batch_size):
+            batch = tags[i:i + batch_size]
+            created_tags.extend(Tag.objects.bulk_create(batch))
+
+        return created_tags
