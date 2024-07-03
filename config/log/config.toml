@@ -1,0 +1,41 @@
+# version = 1
+# disable_existing_loggers = true
+
+# [handlers.warehouseHandler]
+# level = "DEBUG"
+# class = "logging.handlers.RotatingFileHandler"
+# filename = "logs/elearning/warehouse.log"
+# maxBytes = 1048576    # 1 MB
+# backupCount = 10
+# formatter = "coreFormatter"
+
+# [handlers.OTPHandler]
+# level = "DEBUG"
+# class = "logging.handlers.RotatingFileHandler"
+# filename = "logs/account/OTP.log"
+# maxBytes = 1048576    # 1 MB
+# backupCount = 10
+# formatter = "coreFormatter"
+
+# [handlers.consoleHandler]
+# level="DEBUG"
+# class="logging.StreamHandler"
+# formatter = "consoleFormatter"
+
+# [formatters.coreFormatter]
+# format = "%(levelname)s - %(asctime)s - %(name)s.%(module)s - %(funcName)s - %(message)s"
+# datefmt = "%Y-%m-%d %H:%M:%S"
+
+# [formatters.consoleFormatter]
+# format = "%(levelname)s - %(asctime)s - %(name)s.%(module)s %(message)s"
+# datefmt = "%Y-%m-%d %H:%M:%S"
+
+# [loggers.warehouse]
+# level = "DEBUG"
+# handlers = ["warehouseHandler", "consoleHandler"]
+# propagate = false
+
+# [loggers.OTP]
+# level = "DEBUG"
+# handlers = ["OTPHandler", "consoleHandler"]
+# propagate = false

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:latest
@@ -9,10 +7,12 @@ services:
       POSTGRES_PASSWORD: sdjnnfejsajad3574nndfkd
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   django:
     build: .
-    command: /code/entrypoint.sh
+    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -27,3 +27,6 @@ services:
       DJANGO_SUPERUSER_USERNAME: admin
       DJANGO_SUPERUSER_EMAIL: admin@example.com
       DJANGO_SUPERUSER_PASSWORD: 1234
+
+volumes:
+  postgres_data:

@@ -4,3 +4,4 @@ from .category import CategoryAdmin
 from .pack import PackAdmin
 from .product_gallery import ProductGalleryInline
 from .product import ProductAdmin
+from .tag import TagAdmin

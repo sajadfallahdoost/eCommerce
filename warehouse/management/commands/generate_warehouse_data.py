@@ -20,6 +20,9 @@ class Command(BaseCommand):
             brands = warehouse_data_generator.create_brands(total=100)
             self.show_success_msg(f'Created {len(brands)} brands.')
 
+            tags = warehouse_data_generator.create_tags(total=100)
+            self.show_success_msg(f'Created {len(tags)} tags.')
+
             categories = warehouse_data_generator.create_categories(total=100)
             self.show_success_msg(f'Created {len(categories)} categories.')
 
@@ -31,6 +34,7 @@ class Command(BaseCommand):
 
             packs = warehouse_data_generator.create_packs(total=200)
             self.show_success_msg(f'Created {len(packs)} packs.')
+
         except Exception as e:
             self.show_error_msg(f'Failed to create data: {str(e)}')
 

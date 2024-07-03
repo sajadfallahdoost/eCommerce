@@ -1,0 +1,3 @@
+from .address import address_detail, address_list_create
+from .corporateprofile import corporate_profile_detail, corporate_profile_list_create
+from .personal_profile import personal_profile_detail, personal_profile_list_create
