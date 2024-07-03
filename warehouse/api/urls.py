@@ -1,4 +1,3 @@
-# urls.py
 from django.urls import path
 from warehouse.api.views import (
     product_list_create,

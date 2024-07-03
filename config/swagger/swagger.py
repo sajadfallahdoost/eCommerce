@@ -4,11 +4,11 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your Project API",
+        title="E-commerce API",
         default_version='v1',
-        description="API documentation for your project",
+        description="API documentation for the e-commerce application",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@yourdomain.com"),
+        contact=openapi.Contact(email="fallahdoostsajad@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
