@@ -1,7 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
-
 from painless.models import TimestampMixin, TitleSlugMixin
+from django.db import models
+
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
 
 
 class Tag(TimestampMixin, TitleSlugMixin):
@@ -10,6 +15,10 @@ class Tag(TimestampMixin, TitleSlugMixin):
         verbose_name_plural = _("Tags")
         db_table = 'warehouse_tag'
         ordering = ['title']
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     def __str__(self):
         return self.title

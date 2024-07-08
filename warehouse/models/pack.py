@@ -5,6 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from painless.models import StockUnitMixin, DescriptionMixin, TimestampMixin
 from warehouse.models import Product, AttributeValue
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class Pack(StockUnitMixin, DescriptionMixin, TimestampMixin):
     price = models.DecimalField(
@@ -47,6 +52,10 @@ class Pack(StockUnitMixin, DescriptionMixin, TimestampMixin):
         blank=True,
         verbose_name=_("Attribute Values")
     )
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     class Meta:
         verbose_name = _("Pack")

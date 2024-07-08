@@ -60,6 +60,7 @@ address_response_example = openapi.Schema(
     }
 )
 
+
 @swagger_auto_schema(
     method='get',
     responses={200: openapi.Response('List of addresses', AddressSerializer(many=True), examples={'application/json': [address_response_example.example]})}
@@ -88,6 +89,7 @@ def address_list_create(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @swagger_auto_schema(
     method='get',

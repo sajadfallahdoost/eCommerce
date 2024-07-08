@@ -16,6 +16,10 @@ go to environment variable of your system
 click on system env path and click on new
 paste this: C:\Program Files\PostgreSQL\16\bin
 
+for restore database:
+python manage.py flush --noinput
+
+
 -> set ssh-key ------------------
 
 Check Existing Keys:
@@ -24,6 +28,38 @@ Get-Content $env:USERPROFILE\.ssh\id_rsa.pub
 Generate SSH Key:
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
+-> Redis ------------------
+
+download redis
+
+install(go to directory)
+redis-server --service-install redis.windows.conf
+
+start
+redis-server --service-start
+
+on setting
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # Ensure this points to the correct Redis server
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+CACHE_TTL = 300  # 5 minutes
+
+
+redis-cli ping
+redis-server --service-stop
+redis-server --service-uninstall
+
+on linux
+sudo systemctl start redis-server
+sudo systemctl status redis-server
+
 -> Docker ------------------
 
 docker-compose build
@@ -31,12 +67,12 @@ docker-compose up
 docker-compose down
 
 docker-compose ps
+docker-compose build --no-cache
 
 
 docker-compose up --build
 
 we need 4 file(Dockerfile, docker-compose.yml, entrypoint.sh, .dockerignore):
-
 ----------
 Dockerfile:
 FROM python:3.11
@@ -161,7 +197,7 @@ git log
 git branch -a
 git flow feature start sajad (for create new branch , you can write any name
 for branch like develop, hotfix, ...)
-git checkout "branch name"(main)
+git check out "branch name"(main)
 
 git merge "branch name"(main)
 
@@ -170,9 +206,21 @@ git fetch
 
 git fetch origin
 
+git reset --hard HEAD
+git clean -fd
+
 
 touch filename (for creating new file)
 
+feat: A new feature
+fix: A bug fix
+chore: Routine tasks, maintenance, or refactoring
+docs: Documentation updates
+style: Code style changes (e.g., formatting)
+test: Adding or modifying tests
+perf: Performance-related changes
+refactor: Code changes without adding features or fixing bugs
+ci: Continuous Integration/Deployment configuration changes
 ----------
 .gitignore:
 # Created by https://www.gitignore.io
@@ -328,37 +376,37 @@ psql -U postgres(in bash)
 
 paste this text:
 
-CREATE DATABASE "Backend" ;
+CREATE DATABASE "ecommerce" ;
 
-CREATE USER "Backend_user" WITH PASSWORD 'sdjnnfejsajad3574nndfkd' ;
+CREATE USER "ecommerce_user" WITH PASSWORD 'Sf35741381@' ;
 
-ALTER ROLE "Backend_user" SET client_encoding TO 'utf8' ;
+ALTER ROLE "ecommerce_user" SET client_encoding TO 'utf8' ;
 
-ALTER ROLE "Backend_user" SET default_transaction_isolation TO 'read committed' ;
+ALTER ROLE "ecommerce_user" SET default_transaction_isolation TO 'read committed' ;
 
-ALTER ROLE "Backend_user" SET timezone TO 'UTC' ;
+ALTER ROLE "ecommerce_user" SET timezone TO 'UTC' ;
 
-ALTER USER "Backend_user" CREATEDB ;
+ALTER USER "ecommerce_user" CREATEDB ;
 
-GRANT ALL PRIVILEGES ON DATABASE Backend TO "Backend_user" ;
+GRANT ALL PRIVILEGES ON DATABASE ecommerce TO "ecommerce_user" ;
 
-GRANT ALL ON schema public TO "Backend_user" ;
+GRANT ALL ON schema public TO "ecommerce_user" ;
 
-SELECT has_schema_privilege( 'Backend_user','public','CREATE') ;
+SELECT has_schema_privilege( 'ecommerce_user','public','CREATE') ;
 
-ALTER DATABASE "Backend" OWNER TO "Backend_user" ;
+ALTER DATABASE "ecommerce" OWNER TO "ecommerce_user" ;
 
 
 change setting database to this :
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "Backend",
-        "USER": "Backend_user",
-        "PASSWORD": "sdjnnfejsajad3574nndfkd",
+        "NAME": "ecommerce",
+        "USER": "ecommerce_user",
+        "PASSWORD": "Sf35741381@",
         "HOST": "127.0.0.1",
         "PORT": "5432",
-        "TEST": {"NAME": "Backend_test"},
+        "TEST": {"NAME": "ecommerce_test"},
     },
 }
 

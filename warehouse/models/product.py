@@ -4,6 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from painless.models import TitleSlugMixin, TimestampMixin, StockUnitMixin
 from django.utils.text import slugify
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class Product(TitleSlugMixin, TimestampMixin, StockUnitMixin):
     subtitle = models.CharField(
@@ -64,6 +69,10 @@ class Product(TitleSlugMixin, TimestampMixin, StockUnitMixin):
         verbose_name=_("Maximum Purchase")
     )
 
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
+
     class Meta:
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
@@ -76,3 +85,13 @@ class Product(TitleSlugMixin, TimestampMixin, StockUnitMixin):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
+
+    # @property
+    # def WarehouseDateAccessLayer(self):
+    #     from repository.manager.warehouse import WarehouseDateAccessLayer
+    #     return WarehouseDateAccessLayer()
+
+    # @property
+    # def WarehouseBusinessLogicLayer(self):
+    #     from warehouse.repository.manager.warehouse import WarehouseBusinessLogicLayer
+    #     return WarehouseBusinessLogicLayer()

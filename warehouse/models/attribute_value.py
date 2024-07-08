@@ -3,6 +3,11 @@ from django.utils.translation import gettext_lazy as _
 
 from painless.models import TimestampMixin
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class AttributeValue(TimestampMixin):
     attval_title = models.CharField(
@@ -19,6 +24,10 @@ class AttributeValue(TimestampMixin):
         related_name='children',
         verbose_name=_("Parent Attribute")
     )
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     class Meta:
         verbose_name = _("Attribute Value")

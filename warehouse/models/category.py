@@ -4,6 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from painless.models import TimestampMixin, TitleSlugMixin
 from django.utils.text import slugify
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class Category(TitleSlugMixin, TimestampMixin):
     is_active = models.BooleanField(
@@ -23,6 +28,10 @@ class Category(TitleSlugMixin, TimestampMixin):
         related_name='children',
         verbose_name=_("Parent Category")
     )
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     class Meta:
         verbose_name = _("Category")
