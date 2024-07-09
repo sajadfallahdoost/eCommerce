@@ -160,7 +160,7 @@ db.sqlite3
 .env
 
 -> poetry ------------------
-
+in powershell
 (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
 C:\Users\sajad\AppData\Roaming\Python\Scripts
 
