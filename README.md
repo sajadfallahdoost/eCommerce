@@ -13,6 +13,7 @@ This is a comprehensive eCommerce platform built with Django and Django REST Fra
 - [API Documentation](#api-documentation)
 - [Models Overview](#models-overview)
 - [Project Structure](#project-structure)
+- [Data Generation](#data-generation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -150,6 +151,16 @@ eCommerce/
 └── manage.py
 ```
 
+## Data Generation
+
+To generate sample data for the database, run the following command:
+
+```bash
+python manage.py generate_all_data
+```
+
+This command will fill the database with sample data for testing and development purposes.
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -162,8 +173,4 @@ Contributions are welcome! Please follow these steps:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to customize this README further based on specific details or preferences you have for your project. This should provide a solid foundation for documenting your eCommerce project on GitHub.
+This project is open source and available under the sjd-developer License.
