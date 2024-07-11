@@ -3,6 +3,11 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from painless.models import TimestampMixin, TitleSlugMixin
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class Brand(TimestampMixin, TitleSlugMixin):
     subtitle = models.CharField(
@@ -23,6 +28,10 @@ class Brand(TimestampMixin, TitleSlugMixin):
         default=True,
         verbose_name=_("Is Active")
     )
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     class Meta:
         verbose_name = _("Brand")

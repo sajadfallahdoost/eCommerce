@@ -5,6 +5,11 @@ from painless.models.common import PictureOperationAbstract, TimestampMixin, Tit
 from warehouse.models import Product
 from django.utils.text import slugify
 
+# from warehouse.repository.manager.warehouse import (
+#     WarehouseDateAccessLayer,
+#     WarehouseBusinessLogicLayer
+# )
+
 
 class ProductGallery(PictureOperationAbstract, TimestampMixin, TitleSlugMixin):
     product = models.ForeignKey(
@@ -23,6 +28,10 @@ class ProductGallery(PictureOperationAbstract, TimestampMixin, TitleSlugMixin):
         upload_to='media/uploads/product_pictures/',
         verbose_name=_("Picture")
     )
+
+    objects = models.Manager()
+    # WarehouseDateAccessLayer = WarehouseDateAccessLayer()
+    # WarehouseBusinessLogicLayer = WarehouseBusinessLogicLayer()
 
     class Meta:
         verbose_name = _("Product Gallery")
