@@ -2,10 +2,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from shop.models import Order
+from shop.models.order import Order
 from shop.api.serializers import OrderSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from shop.repository.manager.shop import BasketDataAccessLayer
+from shop.repository.manager.shop import BasketBusinessLogicLayer
+
 
 # Example for request body
 order_example = openapi.Schema(
@@ -74,16 +77,17 @@ def order_list_create(request):
     """
     List all orders, or create a new order.
     """
+
     if request.method == 'GET':
-        orders = Order.objects.all()
+        orders = BasketDataAccessLayer.get_user_orders(request.user.id)
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            order = BasketBusinessLogicLayer.create_order_from_cart(request.user, serializer.validated_data)
+            return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -124,8 +128,8 @@ def order_detail(request, pk):
     elif request.method == 'PUT':
         serializer = OrderSerializer(order, data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            order = BasketBusinessLogicLayer.update_order_status(order.id, serializer.validated_data['status'])
+            return Response(OrderSerializer(order).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':

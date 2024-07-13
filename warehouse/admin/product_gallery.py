@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import ProductGallery
+from warehouse.models.product_gallery import ProductGallery
 
 
 class ProductGalleryInline(admin.TabularInline):

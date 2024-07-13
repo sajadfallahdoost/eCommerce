@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import Category
+from warehouse.models.category import Category
 
 
 @admin.register(Category)

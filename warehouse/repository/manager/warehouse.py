@@ -1,6 +1,6 @@
 from django.db import models
 from warehouse.repository.queryset.warehouse import WarehouseQuerySet
-from warehouse.models import Product
+from warehouse.models.product import Product
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 

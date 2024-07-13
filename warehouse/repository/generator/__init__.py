@@ -1,3 +1,2 @@
-from .warehouse import (
-    WarehouseDataGenerator,
-)
+from .warehouse import WarehouseDataGenerator
+

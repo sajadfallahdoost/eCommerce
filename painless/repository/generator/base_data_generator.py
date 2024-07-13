@@ -7,10 +7,15 @@ import pytz
 from mimesis import Datetime, File, Generic, Text
 from mimesis.locales import Locale
 
-from warehouse.models import Brand, Category, Product, AttributeValue, Pack
-from shop.models import Cart, OrderAddress
-from account.models import CorporateProfile, UserProfile, PersonalProfile, Address
+from warehouse.models.product import Product
+from warehouse.models.brand import Brand
+from warehouse.models.category import Category
+from warehouse.models.pack import Pack
+from warehouse.models.attribute_value import AttributeValue
+from account.models import CorporateProfile, PersonalProfile
 from django.contrib.auth.models import User
+from shop.models.cart import Cart
+from shop.models.order_address import OrderAddress
 
 
 class BaseDataGenerator:

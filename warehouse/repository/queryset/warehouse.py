@@ -1,13 +1,12 @@
 from django.db import models
 
-from warehouse.models import (
-    Product,
-    ProductGallery,
-    Pack,
-    Brand,
-    Category,
-    AttributeValue
-)
+from warehouse.models.product import Product
+from warehouse.models.brand import Brand
+from warehouse.models.category import Category
+from warehouse.models.pack import Pack
+from warehouse.models.attribute_value import AttributeValue
+from warehouse.models.product_gallery import ProductGallery
+from warehouse.models.tag import Tag
 
 
 class WarehouseQuerySet(models.QuerySet):

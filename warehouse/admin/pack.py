@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import Pack
+from warehouse.models.pack import Pack
 
 
 @admin.register(Pack)

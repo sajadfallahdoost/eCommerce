@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import Brand
+from warehouse.models.brand import Brand
 
 
 @admin.register(Brand)

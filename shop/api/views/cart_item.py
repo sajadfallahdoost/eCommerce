@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from shop.models import CartItem
+from shop.models.cart_item import CartItem
 from shop.api.serializers import CartItemSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
