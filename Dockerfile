@@ -6,6 +6,11 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /code
 
+# Install PostgreSQL client utilities and other dependencies
+RUN apt-get update && \
+    apt-get install -y postgresql-client && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install poetry
 RUN pip install "poetry==$POETRY_VERSION"
 
