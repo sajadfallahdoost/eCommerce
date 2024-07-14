@@ -14,7 +14,7 @@ services:
 
   django:
     build: .
-    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: /code/entrypoint.sh
     volumes:
       - .:/code
     ports:
