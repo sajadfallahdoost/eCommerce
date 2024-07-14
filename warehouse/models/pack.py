@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 from painless.models import StockUnitMixin, DescriptionMixin, TimestampMixin
-from warehouse.models import Product, AttributeValue
+from warehouse.models.product import Product
+from warehouse.models.attribute_value import AttributeValue
 
 # from warehouse.repository.manager.warehouse import (
 #     WarehouseDateAccessLayer,

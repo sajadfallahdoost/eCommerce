@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import AttributeValue
+from warehouse.models.attribute_value import AttributeValue
 
 
 @admin.register(AttributeValue)

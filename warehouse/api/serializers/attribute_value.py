@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from warehouse.models import AttributeValue
+from warehouse.models.attribute_value import AttributeValue
 
 
 class AttributeValueSerializer(serializers.ModelSerializer):

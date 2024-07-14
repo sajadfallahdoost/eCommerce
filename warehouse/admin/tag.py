@@ -1,5 +1,5 @@
 from django.contrib import admin
-from warehouse.models import Tag
+from warehouse.models.tag import Tag
 
 
 @admin.register(Tag)

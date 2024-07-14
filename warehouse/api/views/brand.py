@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from warehouse.models import Brand
+from warehouse.models.brand import Brand
 from warehouse.api.serializers import BrandSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi

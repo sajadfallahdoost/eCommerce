@@ -5,7 +5,12 @@ from typing import List
 from django.utils.text import slugify
 from tqdm import tqdm
 from faker import Faker
-from warehouse.models import Product, Brand, Category, Tag, Pack, AttributeValue
+from warehouse.models.product import Product
+from warehouse.models.pack import Pack
+from warehouse.models.brand import Brand
+from warehouse.models.category import Category
+from warehouse.models.tag import Tag
+from warehouse.models.attribute_value import AttributeValue
 from painless.repository.generator import BaseDataGenerator
 
 fake = Faker()
@@ -212,7 +217,9 @@ class WarehouseDataGenerator(BaseDataGenerator):
 
         return created_packs
 
-    def create_tags(self, total: int = 200, batch_size: int = 10, disable_progress_bar: bool = False) -> List[Tag]:
+    def create_tags(
+        self, total: int = 200, batch_size: int = 10, disable_progress_bar: bool = False
+    ) -> List[Tag]:
         """
         Generate and create fake tags.
 

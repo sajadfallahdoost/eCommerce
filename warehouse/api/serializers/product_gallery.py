@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from warehouse.models import ProductGallery
+from warehouse.models.product_gallery import ProductGallery
 
 
 class ProductGallerySerializer(serializers.ModelSerializer):

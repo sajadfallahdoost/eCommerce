@@ -1,6 +1,6 @@
 from django.contrib import admin
 from warehouse.admin import ProductGalleryInline
-from warehouse.models import Product
+from warehouse.models.product import Product
 
 
 @admin.register(Product)

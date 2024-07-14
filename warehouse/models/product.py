@@ -86,12 +86,12 @@ class Product(TitleSlugMixin, TimestampMixin, StockUnitMixin):
         self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
 
-    # @property
-    # def WarehouseDateAccessLayer(self):
-    #     from repository.manager.warehouse import WarehouseDateAccessLayer
-    #     return WarehouseDateAccessLayer()
+    @property
+    def WarehouseDateAccessLayer(self):
+        from repository.manager.warehouse import WarehouseDateAccessLayer
+        return WarehouseDateAccessLayer()
 
-    # @property
-    # def WarehouseBusinessLogicLayer(self):
-    #     from warehouse.repository.manager.warehouse import WarehouseBusinessLogicLayer
-    #     return WarehouseBusinessLogicLayer()
+    @property
+    def WarehouseBusinessLogicLayer(self):
+        from warehouse.repository.manager.warehouse import WarehouseBusinessLogicLayer
+        return WarehouseBusinessLogicLayer()

@@ -1,7 +1,8 @@
 from datetime import timezone
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from warehouse.models import Product, ProductGallery
+from warehouse.models.product import Product
+from warehouse.models.product_gallery import ProductGallery
 
 
 @receiver(pre_save, sender=Product)

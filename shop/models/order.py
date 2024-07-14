@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from painless.models.common import TimestampMixin
 from shop.helper import TRANSACTION_STATUS
+# from shop.repository.manager.shop import BasketDataAccessLayer
+# from shop.repository.manager.shop import BasketBusinessLogicLayer
 
 
 class Order(TimestampMixin):
@@ -24,6 +26,10 @@ class Order(TimestampMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name=_("User"))
     cart = models.ForeignKey('shop.Cart', on_delete=models.CASCADE, verbose_name=_("Cart"))
 
+    objects = models.Manager()
+    # BasketDataAccessLayer = BasketDataAccessLayer()
+    # BasketBusinessLogicLayer = BasketBusinessLogicLayer()
+
     class Meta:
         verbose_name = _("Order")
         verbose_name_plural = _("Orders")
@@ -31,3 +37,14 @@ class Order(TimestampMixin):
 
     def __str__(self) -> str:
         return f'Order {self.id} - {self.transaction_number}'
+
+
+    # @property
+    # def BasketDataAccessLayer(self):
+    #     from shop.repository.manager.shop import BasketDataAccessLayer
+    #     return BasketDataAccessLayer()
+
+    # @property
+    # def BasketBusinessLogicLayer(self):
+    #     from shop.repository.manager.shop import BasketBusinessLogicLayer
+    #     return BasketBusinessLogicLayer()

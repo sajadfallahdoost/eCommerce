@@ -2,12 +2,13 @@ import random
 from typing import List
 from itertools import count
 import uuid
-from django.contrib.auth.models import User
 from faker import Faker
 from tqdm import tqdm
 from django.utils.text import slugify
-from warehouse.models import Pack
-from shop.models import Cart, Order, OrderAddress, CartItem
+from shop.models.cart import Cart
+from shop.models.order import Order
+from shop.models.order_address import OrderAddress
+from shop.models.cart_item import CartItem
 from painless.repository.generator import BaseDataGenerator
 from shop.helper import TRANSACTION_STATUS
 
@@ -30,7 +31,6 @@ class ShopDataGenerator(BaseDataGenerator):
         """
         super().__init__(*args, **kwargs)
         self.priority_counter = count(start=1)
-
 
     def create_order_addresses(self, total: int = 100, disable_progress_bar: bool = False) -> List[OrderAddress]:
         """

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from warehouse.models import Tag
+from warehouse.models.tag import Tag
 
 
 class TagSerializer(serializers.ModelSerializer):

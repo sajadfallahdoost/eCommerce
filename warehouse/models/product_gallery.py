@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from painless.models.common import PictureOperationAbstract, TimestampMixin, TitleSlugMixin
-from warehouse.models import Product
+from warehouse.models.product import Product
 from django.utils.text import slugify
 
 # from warehouse.repository.manager.warehouse import (
