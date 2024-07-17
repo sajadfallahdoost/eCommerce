@@ -3,10 +3,17 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from services.otp.logic import OTPService
-from services.otp.api.serializers import SendOTPSerializer, VerifyOTPSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from services.otp.api.serializers import (
+    SendOTPEmailSerializer,
+    SendOTPSMSSerializer,
+    VerifyOTPEmailSerializer,
+    VerifyOTPSMSSerializer
+)
+from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+# from django.views.decorators.csrf import csrf_exempt
 
 # Example for request body for SendOTP
 send_otp_example = openapi.Schema(
@@ -46,15 +53,16 @@ otp_response_example = openapi.Schema(
 )
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def send_otp(request):
+def send_otp_email(request):
     """
     Send OTP to the user's email.
     """
-    serializer = SendOTPSerializer(data=request.data)
+    serializer = SendOTPEmailSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']
-        otp_service = OTPService(email)
-        otp_service.send_otp()
+        user = User.objects.filter(email=email).first()
+        otp_service = OTPService(user=user)
+        otp_service.send_otp_email(email)
         return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -69,15 +77,16 @@ def send_otp(request):
 )
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def verify_otp(request):
+def verify_otp_email(request):
     """
     Verify the OTP sent to the user's email.
     """
-    serializer = VerifyOTPSerializer(data=request.data)
+    serializer = VerifyOTPEmailSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']
         otp = serializer.validated_data['otp']
-        otp_service = OTPService(email)
+        user = User.objects.filter(email=email).first()
+        otp_service = OTPService(user=user)
         if otp_service.verify_otp(otp):
             return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
         else:
@@ -85,106 +94,51 @@ def verify_otp(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @swagger_auto_schema(
-#     method='post',
-#     request_body=send_otp_example,
-#     responses={
-#         200: openapi.Response('OTP sent successfully', otp_response_example),
-#         400: 'Bad Request - Invalid data',
-#         404: 'Not Found'
-#     }
-# )
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
-# def send_otp(request):
-#     """
-#     Send OTP to the user's email.
-#     """
-#     serializer = SendOTPSerializer(data=request.data)
-#     if serializer.is_valid():
-#         email = serializer.validated_data['email']
-#         try:
-#             user = User.objects.get(email=email)
-#             otp_service = OTPService(user)
-#             otp_service.send_otp(email)
-#             return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
-#         except User.DoesNotExist:
-#             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @csrf_exempt
+@swagger_auto_schema(
+    method='post',
+    request_body=send_otp_example,
+    responses={
+        200: openapi.Response('OTP sent successfully', otp_response_example),
+        400: 'Bad Request - Invalid data'
+    }
+)
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def send_otp_sms(request):
+    """
+    Send OTP to the user's phone number.
+    """
+    serializer = SendOTPSMSSerializer(data=request.data)
+    if serializer.is_valid():
+        phone_number = serializer.validated_data['phone_number']
+        otp_service = OTPService()
+        otp_service.send_otp_sms(phone_number)
+        return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @swagger_auto_schema(
-#     method='post',
-#     request_body=verify_otp_example,
-#     responses={
-#         200: openapi.Response('OTP verified successfully', otp_response_example),
-#         400: 'Bad Request - Invalid data',
-#         404: 'Not Found'
-#     }
-# )
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def verify_otp(request):
-#     """
-#     Verify the OTP sent to the user's email.
-#     """
-#     serializer = VerifyOTPSerializer(data=request.data)
-#     if serializer.is_valid():
-#         email = serializer.validated_data['email']
-#         otp = serializer.validated_data['otp']
-#         try:
-#             user = User.objects.get(email=email)
-#             otp_service = OTPService(user)
-#             if otp_service.verify_otp(otp):
-#                 return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
-#             else:
-#                 return Response({'message': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
-#         except User.DoesNotExist:
-#             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
-# from django.contrib.auth.models import User
-# from services.otp.logic import OTPService
-# from services.otp.api.serializers import SendOTPSerializer, VerifyOTPSerializer
-# from rest_framework.permissions import AllowAny, IsAuthenticated
-
-
-# class SendOTPView(APIView):
-#     permission_classes = [AllowAny]
-
-#     def post(self, request):
-#         serializer = SendOTPSerializer(data=request.data)
-#         if serializer.is_valid():
-#             email = serializer.validated_data['email']
-#             try:
-#                 user = User.objects.get(email=email)
-#                 otp_service = OTPService(user)
-#                 otp_service.send_otp(email)
-#                 return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
-#             except User.DoesNotExist:
-#                 return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# class VerifyOTPView(APIView):
-#     permission_classes = [IsAuthenticated]
-
-#     def post(self, request):
-#         serializer = VerifyOTPSerializer(data=request.data)
-#         if serializer.is_valid():
-#             email = serializer.validated_data['email']
-#             otp = serializer.validated_data['otp']
-#             try:
-#                 user = User.objects.get(email=email)
-#                 otp_service = OTPService(user)
-#                 if otp_service.verify_otp(otp):
-#                     return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
-#                 else:
-#                     return Response({'message': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
-#             except User.DoesNotExist:
-#                 return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@swagger_auto_schema(
+    method='post',
+    request_body=verify_otp_example,
+    responses={
+        200: openapi.Response('OTP verified successfully', otp_response_example),
+        400: 'Bad Request - Invalid data'
+    }
+)
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def verify_otp_sms(request):
+    """
+    Verify the OTP sent to the user's phone number.
+    """
+    serializer = VerifyOTPSMSSerializer(data=request.data)
+    if serializer.is_valid():
+        phone_number = serializer.validated_data['phone_number']
+        otp = serializer.validated_data['otp']
+        otp_service = OTPService()
+        if otp_service.verify_otp(otp):
+            return Response({'message': 'OTP verified successfully'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
