@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:latest
@@ -12,7 +14,7 @@ services:
 
   django:
     build: .
-    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: /code/entrypoint.sh
     volumes:
       - .:/code
     ports:

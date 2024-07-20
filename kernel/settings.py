@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,11 +15,12 @@ SECRET_KEY = 'django-insecure-awdik+&kt%p(yi)z7-#x49^-+%y%)62va^b$1#3^00y$1dcl_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["49.13.232.71", "127.0.0.1", "localhost"]
+
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +74,20 @@ WSGI_APPLICATION = 'kernel.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.getenv("DB_NAME", "Backend"),
+#         "USER": os.getenv("DB_USER", "Backend_user"),
+#         "PASSWORD": os.getenv("DB_PASSWORD", "sdjnnfejsajad3574nndfkd"),
+#         "HOST": os.getenv("DB_HOST", "db"),  # Updated to use the service name 'db'
+#         "PORT": "5432",
+#         "TEST": {"NAME": "Backend_test"},
+#     },
+# }
+
 
 DATABASES = {
     "default": {
@@ -183,3 +198,21 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'amieseansi@gmail.com'
 EMAIL_HOST_PASSWORD = 'qblg uvce gdzg frzc'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
