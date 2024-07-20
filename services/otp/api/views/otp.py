@@ -12,11 +12,11 @@ from services.otp.api.serializers import (
 from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-
 # from django.views.decorators.csrf import csrf_exempt
 
-# Example for request body for SendOTP
-send_otp_example = openapi.Schema(
+
+# Example for request body for SendOTP_email
+send_otp_email_example = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
         'email': openapi.Schema(type=openapi.TYPE_STRING, description='User email', example='user@example.com')
@@ -24,12 +24,31 @@ send_otp_example = openapi.Schema(
     required=['email']
 )
 
-# Example for request body for VerifyOTP
-verify_otp_example = openapi.Schema(
+# Example for request body for SendOTP_sms
+send_otp_sms_example = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={
+        'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='phone_number', example='09332368885')
+    },
+    required=['phone_number']
+)
+
+# Example for request body for VerifyOTP_email
+verify_otp_email_example = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
         'email': openapi.Schema(type=openapi.TYPE_STRING, description='User email', example='user@example.com'),
-        'otp': openapi.Schema(type=openapi.TYPE_STRING, description='OTP code', example='123456')
+        'otp': openapi.Schema(type=openapi.TYPE_STRING, description='OTP code', example='1234')
+    },
+    required=['email', 'otp']
+)
+
+# Example for request body for VerifyOTP_sms
+verify_otp_sms_example = openapi.Schema(
+    type=openapi.TYPE_OBJECT,
+    properties={
+        'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='phone_number', example='user@example.com'),
+        'otp': openapi.Schema(type=openapi.TYPE_STRING, description='OTP code', example='1234')
     },
     required=['email', 'otp']
 )
@@ -45,7 +64,7 @@ otp_response_example = openapi.Schema(
 
 @swagger_auto_schema(
     method='post',
-    request_body=send_otp_example,
+    request_body=send_otp_email_example,
     responses={
         200: openapi.Response('OTP sent successfully', otp_response_example),
         400: 'Bad Request - Invalid data'
@@ -69,7 +88,7 @@ def send_otp_email(request):
 
 @swagger_auto_schema(
     method='post',
-    request_body=verify_otp_example,
+    request_body=verify_otp_email_example,
     responses={
         200: openapi.Response('OTP verified successfully', otp_response_example),
         400: 'Bad Request - Invalid data'
@@ -97,7 +116,7 @@ def verify_otp_email(request):
 # @csrf_exempt
 @swagger_auto_schema(
     method='post',
-    request_body=send_otp_example,
+    request_body=send_otp_sms_example,
     responses={
         200: openapi.Response('OTP sent successfully', otp_response_example),
         400: 'Bad Request - Invalid data'
@@ -120,7 +139,7 @@ def send_otp_sms(request):
 
 @swagger_auto_schema(
     method='post',
-    request_body=verify_otp_example,
+    request_body=verify_otp_sms_example,
     responses={
         200: openapi.Response('OTP verified successfully', otp_response_example),
         400: 'Bad Request - Invalid data'
