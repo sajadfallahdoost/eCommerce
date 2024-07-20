@@ -16,11 +16,11 @@ SECRET_KEY = 'django-insecure-awdik+&kt%p(yi)z7-#x49^-+%y%)62va^b$1#3^00y$1dcl_=
 DEBUG = True
 
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-ALLOWED_HOSTS = ["49.13.232.71"]
+ALLOWED_HOSTS = ["49.13.232.71", "127.0.0.1", "localhost"]
+
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
