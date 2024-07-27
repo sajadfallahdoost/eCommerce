@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_extensions',
     'drf_yasg',
+    'corsheaders',
     # 'django_filters',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -216,3 +218,45 @@ LOGGING = {
         },
     },
 }
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "78.157.51.34",
+    "49.13.232.71",
+    "127.0.0.1",
+    "localhost"
+]
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = [
+    "Content-Type",
+    "X-CSRFToken",
+]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"^https://\w+\.78.157.51.34:8000\.com$",
+]
+
+
+# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_HTTPONLY = True
+# CSRF_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_SECURE = False
+# SESSION_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_SAMESITE = 'Lax'

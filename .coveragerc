@@ -1,0 +1,19 @@
+[run]
+branch = True
+source =
+    shop
+
+[report]
+omit =
+    */__init__.py
+    */migrations/*
+    */tests/*
+    */admin.py
+    */apps.py
+    */wsgi.py
+    */asgi.py
+    */settings.py
+    */urls.py
+    */manage.py
+    */tests.py
+

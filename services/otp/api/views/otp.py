@@ -47,8 +47,8 @@ verify_otp_email_example = openapi.Schema(
 verify_otp_sms_example = openapi.Schema(
     type=openapi.TYPE_OBJECT,
     properties={
-        'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='phone_number', example='user@example.com'),
-        'otp': openapi.Schema(type=openapi.TYPE_STRING, description='OTP code', example='1234')
+        'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='phone_number', example='09332368885'),
+        'otp': openapi.Schema(type=openapi.TYPE_STRING, description='OTP code', example='123456')
     },
     required=['email', 'otp']
 )
