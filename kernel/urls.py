@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -8,9 +8,10 @@ from rest_framework_simplejwt.views import (
 
 from config.swagger import schema_view
 
+admin.autodiscover()
 
 urlpatterns = [
-    # path('', admin.site.urls),
+    path('admin/login/', csrf_exempt(admin.site.login)),
     path('admin/', admin.site.urls),
     path('api/warehouse/', include('warehouse.api.urls')),
     path('api/shop/', include('shop.api.urls')),
