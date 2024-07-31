@@ -1,1 +1,1 @@
-from .test_shop import CartAPITestCase
+from .test_cart import CartAPITestCase
