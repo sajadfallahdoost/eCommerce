@@ -1,19 +1,27 @@
 [run]
 branch = True
 source =
-    shop
+    shop,
+    warehouse
 
 [report]
 omit =
     */__init__.py
     */migrations/*
     */tests/*
-    */admin.py
     */apps.py
     */wsgi.py
     */asgi.py
     */settings.py
     */urls.py
     */manage.py
-    */tests.py
-
+    */shop/models/*
+    */warehouse/models/*
+    */shop/admin/*
+    */warehouse/admin/*
+    */shop/api/serializers/*
+    */warehouse/api/serializers/*
+    */repository/*
+    */signals/*
+    */management/commands/*
+    */shop/helper/*
