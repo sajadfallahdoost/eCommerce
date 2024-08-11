@@ -156,19 +156,24 @@ def verify_otp_sms(request):
     """
     serializer = VerifyOTPSMSSerializer(data=request.data)
     if serializer.is_valid():
-        phone_number = serializer.validated_data['phone_number']
+        phone_number = serializer.validated_data.get('phone_number')
+        # if not phone_number:
+        #     raise ValueError("Phone number is required")
+        # phone_number = serializer.validated_data['phone_number']
         otp = serializer.validated_data['otp']
 
         # Find user by phone number in PersonalProfile or CorporateProfile
         user = None
         personal_profile = PersonalProfile.objects.filter(phone=phone_number).first()
         corporate_profile = CorporateProfile.objects.filter(phone=phone_number).first()
+        # breakpoint()
 
         if personal_profile:
             user = personal_profile.user
         elif corporate_profile:
             user = corporate_profile.user
 
+        # breakpoint()
         otp_service = OTPService(user=user if user else None)
         # breakpoint()
         if otp_service.verify_otp(otp):
@@ -177,9 +182,12 @@ def verify_otp_sms(request):
                 user = User.objects.create_user(username=phone_number, password=User.objects.make_random_password())
                 # Create a new PersonalProfile for non-registered users
                 personal_profile = PersonalProfile.objects.create(user=user, phone=phone_number)
+            else:
+                print("test")
 
             tokens = OTPService.generate_tokens_for_user(user)
             return Response({'message': 'OTP verified successfully', 'tokens': tokens}, status=status.HTTP_200_OK)
+
         else:
             return Response({'message': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
