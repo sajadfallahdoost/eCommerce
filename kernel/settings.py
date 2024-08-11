@@ -16,9 +16,7 @@ SECRET_KEY = 'django-insecure-awdik+&kt%p(yi)z7-#x49^-+%y%)62va^b$1#3^00y$1dcl_=
 DEBUG = True
 
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-ALLOWED_HOSTS = ["78.157.51.34","49.13.232.71", "127.0.0.1", "localhost"]
-
-
+ALLOWED_HOSTS = ["78.157.51.34", "49.13.232.71", "127.0.0.1", "localhost"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -33,12 +31,14 @@ INSTALLED_APPS = [
     'account',
     'services',
     'services.otp',
+    'services.payment',
     'painless',
     'rest_framework',
     'rest_framework_simplejwt',
     'django_extensions',
     'drf_yasg',
     'corsheaders',
+    "azbankgateways",
     # 'django_filters',
 ]
 
@@ -205,18 +205,93 @@ EMAIL_HOST_PASSWORD = 'qblg uvce gdzg frzc'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'formatter': 'verbose',
+        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
     },
     'loggers': {
-        '': {
-            'handlers': ['console'],
+        'django': {
+            'handlers': ['file', 'console'],
             'level': 'DEBUG',
+            'propagate': True,
+        },
+        'services.otp': {  # Replace 'your_app_name' with the actual name of your app
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
+}
+
+
+AZ_IRANIAN_BANK_GATEWAYS = {
+    "GATEWAYS": {
+        # "BMI": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        #     "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+        #     "SECRET_KEY": "<YOUR SECRET CODE>",
+        # },
+        # "SEP": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        #     "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+        # },
+        # "ZARINPAL": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        #     "SANDBOX": 1,  # 0 disable, 1 active
+        # },
+        "IDPAY": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "METHOD": "POST",  # GET or POST
+            "X_SANDBOX": 1,  # 0 disable, 1 active
+        },
+        # "ZIBAL": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        # },
+        # "BAHAMTA": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        # },
+        # "MELLAT": {
+        #     "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+        #     "USERNAME": "<YOUR USERNAME>",
+        #     "PASSWORD": "<YOUR PASSWORD>",
+        # },
+        # "PAYV1": {
+        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        #     "X_SANDBOX": 1,  # 0 disable, 1 active
+        # },
+    },
+    "IS_SAMPLE_FORM_ENABLE": True,  # اختیاری و پیش فرض غیر فعال است
+    "DEFAULT": "IDPAY",
+    "CURRENCY": "IRR",  # اختیاری
+    "TRACKING_CODE_QUERY_PARAM": "tc",  # اختیاری
+    "TRACKING_CODE_LENGTH": 16,  # اختیاری
+    "SETTING_VALUE_READER_CLASS": "azbankgateways.readers.DefaultReader",  # اختیاری
+    "BANK_PRIORITIES": [],
+    #     "BMI",
+    #     "SEP",
+    #     # and so on ...
+    # ],  # اختیاری
+    "IS_SAFE_GET_GATEWAY_PAYMENT": False,  # اختیاری، بهتر است True بزارید.
+    "CUSTOM_APP": None,  # اختیاری
 }
 
 
