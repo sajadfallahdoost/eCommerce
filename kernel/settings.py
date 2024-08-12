@@ -202,45 +202,45 @@ EMAIL_HOST_USER = 'amieseansi@gmail.com'
 EMAIL_HOST_PASSWORD = 'qblg uvce gdzg frzc'
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'services.otp': {  # Replace 'your_app_name' with the actual name of your app
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '{levelname} {asctime} {module} {message}',
+#             'style': '{',
+#         },
+#         'simple': {
+#             'format': '{levelname} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'debug.log'),
+#             'formatter': 'verbose',
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file', 'console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'services.otp': {  # Replace 'your_app_name' with the actual name of your app
+#             'handlers': ['file', 'console'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#     },
+# }
 
 
 AZ_IRANIAN_BANK_GATEWAYS = {
@@ -259,7 +259,7 @@ AZ_IRANIAN_BANK_GATEWAYS = {
         #     "SANDBOX": 1,  # 0 disable, 1 active
         # },
         "IDPAY": {
-            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "MERCHANT_CODE": "6a7f99eb-7c20-4412-a972-6dfb7cd253a4",
             "METHOD": "POST",  # GET or POST
             "X_SANDBOX": 1,  # 0 disable, 1 active
         },
@@ -335,3 +335,5 @@ AZ_IRANIAN_BANK_GATEWAYS = {
 # SESSION_COOKIE_SECURE = False
 # SESSION_COOKIE_HTTPONLY = True
 # SESSION_COOKIE_SAMESITE = 'Lax'
+
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
