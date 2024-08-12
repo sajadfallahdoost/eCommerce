@@ -19,9 +19,9 @@ class OTPService:
         if not self.secret:
             self.secret = pyotp.random_base32()
             cache.set(self.otp_key, self.secret, timeout=None)
-            logger.debug(f"Generated and set new secret: {self.secret}")
-        else:
-            logger.debug(f"Retrieved existing secret: {self.secret}")
+            # logger.debug(f"Generated and set new secret: {self.secret}")
+        # else:
+        #     # logger.debug(f"Retrieved existing secret: {self.secret}")
 
     def generate_otp(self):
         totp = pyotp.TOTP(self.secret)
@@ -64,7 +64,7 @@ class OTPService:
 
     def verify_otp(self, otp):
         stored_otp = cache.get(self.otp_key)
-        logger.debug(f"Verifying OTP. Stored OTP: {stored_otp}, Provided OTP: {otp}")
+        # logger.debug(f"Verifying OTP. Stored OTP: {stored_otp}, Provided OTP: {otp}")
 
         if stored_otp and stored_otp == otp:
             cache.delete(self.otp_key)
@@ -98,7 +98,7 @@ class OTPService:
 #         if not secret:
 #             secret = pyotp.random_base32()
 #             cache.set(otp_key, secret, timeout=None)
-#             logger.debug(f"Generated and set new secret for key {otp_key}: {secret}")
+            # logger.debug(f"Generated and set new secret for key {otp_key}: {secret}")
 #         else:
 #             logger.debug(f"Retrieved existing secret for key {otp_key}: {secret}")
 #         return secret
