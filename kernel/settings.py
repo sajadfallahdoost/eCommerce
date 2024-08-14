@@ -254,15 +254,15 @@ AZ_IRANIAN_BANK_GATEWAYS = {
         #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
         #     "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
         # },
-        # "ZARINPAL": {
-        #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
-        #     "SANDBOX": 1,  # 0 disable, 1 active
-        # },
         "IDPAY": {
             "MERCHANT_CODE": "6a7f99eb-7c20-4412-a972-6dfb7cd253a4",
             "METHOD": "POST",  # GET or POST
             "X_SANDBOX": 1,  # 0 disable, 1 active
         },
+        # "ZARINPAL": {
+        #     "MERCHANT_CODE": "6a7f99eb-7c20-4412-a972-6dfb7cd253a4",
+        #     "SANDBOX": 1,  # 0 disable, 1 active
+        # },
         # "ZIBAL": {
         #     "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
         # },
@@ -285,7 +285,7 @@ AZ_IRANIAN_BANK_GATEWAYS = {
     "TRACKING_CODE_QUERY_PARAM": "tc",  # اختیاری
     "TRACKING_CODE_LENGTH": 16,  # اختیاری
     "SETTING_VALUE_READER_CLASS": "azbankgateways.readers.DefaultReader",  # اختیاری
-    "BANK_PRIORITIES": [],
+    "BANK_PRIORITIES": ["IDPAY"],
     #     "BMI",
     #     "SEP",
     #     # and so on ...
