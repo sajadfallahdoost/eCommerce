@@ -55,10 +55,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'kernel.urls'
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -337,3 +339,8 @@ AZ_IRANIAN_BANK_GATEWAYS = {
 # SESSION_COOKIE_SAMESITE = 'Lax'
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+
+MERCHANT = "00000000-0000-0000-0000-000000000000"
+
+SANDBOX = True

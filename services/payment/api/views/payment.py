@@ -17,6 +17,10 @@ from rest_framework.permissions import AllowAny
 from django.urls import reverse
 from django.shortcuts import render
 
+# from django.conf import settings
+# import requests
+# import json
+
 
 @csrf_exempt
 def go_to_gateway_view(request):
@@ -42,11 +46,11 @@ def go_to_gateway_view(request):
         bank_record = bank.ready()
 
         # هدایت کاربر به درگاه بانک
-        return bank.redirect_gateway()
+        context = bank.get_gateway()
+        return render(request, "redirect_to_bank.html", context=context)
     except AZBankGatewaysException as e:
         logging.critical(e)
-        # TODO: redirect to failed page.
-        raise e
+        return render(request, "redirect_to_bank.html")
 
 
 @csrf_exempt
@@ -102,3 +106,67 @@ def payment_request(request):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(paymentrequest.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# if settings.SANDBOX:
+#     sandbox = 'sandbox'
+# else:
+#     sandbox = 'www'
+
+# ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest.json"
+# ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
+# ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
+
+# amount = 1000  # Rial / Required
+# description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
+# phone = 'YOUR_PHONE_NUMBER'  # Optional
+# # Important: need to edit for realy server.
+# CallbackURL = 'http://127.0.0.1:8080/verify/'
+
+
+# def send_request(request):
+#     data = {
+#         "MerchantID": settings.MERCHANT,
+#         "Amount": amount,
+#         "Description": description,
+#         "Phone": phone,
+#         "CallbackURL": CallbackURL,
+#     }
+#     data = json.dumps(data)
+#     # set content length by data
+#     headers = {'content-type': 'application/json', 'content-length': str(len(data))}
+#     try:
+#         response = requests.post(ZP_API_REQUEST, data=data, headers=headers, timeout=10)
+
+#         if response.status_code == 200:
+#             response = response.json()
+#             if response['Status'] == 100:
+#                 return {'status': True, 'url': ZP_API_STARTPAY + str(response['Authority']), 'authority': response['Authority']}
+#             else:
+#                 return {'status': False, 'code': str(response['Status'])}
+#         return response
+
+#     except requests.exceptions.Timeout:
+#         return {'status': False, 'code': 'timeout'}
+#     except requests.exceptions.ConnectionError:
+#         return {'status': False, 'code': 'connection error'}
+
+
+# def verify(authority):
+#     data = {
+#         "MerchantID": settings.MERCHANT,
+#         "Amount": amount,
+#         "Authority": authority,
+#     }
+#     data = json.dumps(data)
+#     # set content length by data
+#     headers = {'content-type': 'application/json', 'content-length': str(len(data)) }
+#     response = requests.post(ZP_API_VERIFY, data=data,headers=headers)
+
+#     if response.status_code == 200:
+#         response = response.json()
+#         if response['Status'] == 100:
+#             return {'status': True, 'RefID': response['RefID']}
+#         else:
+#             return {'status': False, 'code': str(response['Status'])}
+#     return response
