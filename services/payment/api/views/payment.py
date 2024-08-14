@@ -18,9 +18,10 @@ from django.urls import reverse
 from django.shortcuts import render
 
 
+@csrf_exempt
 def go_to_gateway_view(request):
     # خواندن مبلغ از هر جایی که مد نظر است
-    amount = 1000
+    amount = 50000
     # تنظیم شماره موبایل کاربر از هر جایی که مد نظر است
     user_mobile_number = "+989112221234"  # اختیاری
 
@@ -32,7 +33,8 @@ def go_to_gateway_view(request):
         bank.set_request(request)
         bank.set_amount(amount)
         # یو آر ال بازگشت به نرم افزار برای ادامه فرآیند
-        bank.set_client_callback_url(reverse("callback-gateway"))
+        callback_url = request.build_absolute_uri(reverse('callback_gateway'))
+        bank.set_client_callback_url(callback_url)
         bank.set_mobile_number(user_mobile_number)  # اختیاری
 
         # در صورت تمایل اتصال این رکورد به رکورد فاکتور یا هر چیزی که بعدا بتوانید ارتباط بین محصول یا خدمات را با این
@@ -47,6 +49,7 @@ def go_to_gateway_view(request):
         raise e
 
 
+@csrf_exempt
 def callback_gateway_view(request):
     tracking_code = request.GET.get(settings.TRACKING_CODE_QUERY_PARAM, None)
     if not tracking_code:
