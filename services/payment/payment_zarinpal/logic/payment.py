@@ -21,19 +21,21 @@ class PaymentLogic:
                 "mobile": mobile,
             }
         }
-        response = requests.post(url, headers=headers, json=payload)
-        response_data = response.json()
-        breakpoint()
 
-        # if response_data['data']['code'] != 100:
-        #     raise Exception("Failed to initiate payment: " + response_data['errors'][0]['message'])
-
-        if response.status_code != 200:
-            raise Exception(f"Failed with status code: {response.status_code}")
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=10)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as http_err:
+            raise Exception(f"HTTP error occurred: {http_err}")
+        except Exception as err:
+            raise Exception(f"An error occurred: {err}")
 
         try:
             response_data = response.json()
         except ValueError as e:
             raise Exception("Failed to parse JSON response: " + str(e))
+
+        if 'data' not in response_data or 'authority' not in response_data['data']:
+            raise Exception("Unexpected response structure")
 
         return response_data['data']

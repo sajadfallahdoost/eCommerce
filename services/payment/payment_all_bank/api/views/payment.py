@@ -1,18 +1,12 @@
 import logging
 from django.http import Http404, HttpResponse
-from rest_framework import status
-from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from azbankgateways import (
     bankfactories,
     models as bank_models,
     default_settings as settings,
 )
-from services.payment.api.serializers import PaymentRequestSerializer, MetadataSerializer
-from services.payment.logic import PaymentLogic
 from azbankgateways.exceptions import AZBankGatewaysException
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
 
 from django.urls import reverse
 from django.shortcuts import render
@@ -42,11 +36,11 @@ def go_to_gateway_view(request):
         bank_record = bank.ready()
 
         # هدایت کاربر به درگاه بانک
-        return bank.redirect_gateway()
+        context = bank.get_gateway()
+        return render(request, "redirect_to_bank.html", context=context)
     except AZBankGatewaysException as e:
         logging.critical(e)
-        # TODO: redirect to failed page.
-        raise e
+        return render(request, "redirect_to_bank.html")
 
 
 @csrf_exempt
@@ -72,33 +66,3 @@ def callback_gateway_view(request):
     return HttpResponse(
         "پرداخت با شکست مواجه شده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت."
     )
-
-
-@csrf_exempt
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def payment_request(request):
-    paymentrequest = PaymentRequestSerializer(data=request.data)
-
-    if paymentrequest.is_valid():
-        merchant_id = paymentrequest.validated_data['merchant_id']
-        amount = paymentrequest.validated_data['amount']
-        description = paymentrequest.validated_data['description']
-        callback_url = paymentrequest.validated_data['callback_url']
-
-        # Accessing the metadata, assuming it's passed as part of the main request data
-        metadata = paymentrequest.validated_data.get('metadata', {})
-        mobile = metadata.get('mobile')
-        # breakpoint()
-
-        Payment_Logic = PaymentLogic()
-        try:
-            # breakpoint()
-            payment_data = Payment_Logic.send_information(merchant_id, amount, description, callback_url, mobile)
-            # breakpoint()
-            authority = payment_data['authority']
-            return Response({'message': 'Payment initiated successfully', 'authority': authority}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-    return Response(paymentrequest.errors, status=status.HTTP_400_BAD_REQUEST)
