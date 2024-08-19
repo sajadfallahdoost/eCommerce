@@ -28,6 +28,7 @@ This is a comprehensive eCommerce platform built with Django and Django REST Fra
 - Swagger API Documentation
 - Comprehensive Querysets and Business Logic Layers
 - OTP Service for Authentication
+- payment(compatible with all PSP in Iran)
 
 ## Installation
 
