@@ -115,25 +115,31 @@ eCommerce/
 │   │   └── views.py
 │   ├── models/
 │   │   └── user_profile.py
-│   └── serializers.py
+│   └── serializers
 ├── basket/
 │   ├── api/
 │   │   └── views.py
 │   ├── models/
 │   │   └── cart.py
-│   └── serializers.py
+│   └── serializers
 ├── services/
 │   ├── otp/
 │   │   ├── api/
 │   │   │   └── views.py
 │   │   ├── logic.py
-│   │   └── serializers.py
+│   │   └── serializers
+│   ├── payment/
+│   │   ├── api/
+│   │   ├── payment_idpay/
+│   │   ├── payment_sep/
+│   │   ├── payment_zarinpal/
+│   │   └── serializers
 ├── shop/
 │   ├── models/
 │   │   └── order.py
 │   ├── api/
 │   │   └── views.py
-│   └── serializers.py
+│   └── serializers
 ├── warehouse/
 │   ├── api/
 │   │   └── views.py
@@ -144,12 +150,13 @@ eCommerce/
 │   │   │   └── warehouse.py
 │   │   └── queryset/
 │   │       └── warehouse.py
-│   └── serializers.py
+│   └── serializers
 ├── eCommerce/
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
 └── manage.py
+
 ```
 
 ## Data Generation
