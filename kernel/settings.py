@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     "azbankgateways",
+    # "sep_payment"
     # 'django_filters',
 ]
 
