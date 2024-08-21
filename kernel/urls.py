@@ -21,11 +21,10 @@ urlpatterns = [
     path("api/payment/all_bank/", include('services.payment.payment_all_bank.api.urls')),
     path("api/payment/idpay/", include('services.payment.payment_idpay.api.urls')),
     path("api/payment/zarinpal/", include('services.payment.payment_zarinpal.api.urls')),
+    path("api/payment/sep/", include('services.payment.payment_sep.api.urls')),
     path("bankgateways/", az_bank_gateways_urls(), name='bankgateways'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('initiate/', initiate_payment, name='initiate_payment'),
-    # path('verify/', verify_payment, name='verify_payment'),
 ]
