@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'services',
     'services.otp',
     'services.payment',
+    "services.payment.payment_sep",
     'painless',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     "azbankgateways",
-    # "sep_payment"
+    "blog",
     # 'django_filters',
 ]
 
