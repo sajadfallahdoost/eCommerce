@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from painless.models import TitleSlugMixin, TimestampMixin
 
+
 class Category(TimestampMixin, TitleSlugMixin):
     description = models.TextField(
         null=True,
