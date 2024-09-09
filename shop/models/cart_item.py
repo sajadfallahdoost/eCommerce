@@ -17,7 +17,7 @@ class CartItem(TimestampMixin):
 
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items', verbose_name=_("Cart"))
     pack = models.ForeignKey(Pack, on_delete=models.CASCADE, related_name='cart_items', verbose_name=_("Pack"))
-    quantity = models.IntegerField(verbose_name=_("Quantity"))
+    quantity = models.BigIntegerField(verbose_name=_("Quantity"))
 
     class Meta:
         verbose_name = _("Cart Item")

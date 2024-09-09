@@ -59,12 +59,12 @@ class Product(TitleSlugMixin, TimestampMixin, StockUnitMixin):
         verbose_name=_("Tags")
     )
 
-    min_purchase = models.IntegerField(
+    min_purchase = models.BigIntegerField(
         default=1,
         verbose_name=_("Minimum Purchase")
     )
 
-    max_purchase = models.IntegerField(
+    max_purchase = models.BigIntegerField(
         default=1,
         verbose_name=_("Maximum Purchase")
     )

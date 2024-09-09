@@ -25,11 +25,11 @@ class Pack(StockUnitMixin, DescriptionMixin, TimestampMixin):
         verbose_name=_("Buy Price")
     )
 
-    stock = models.IntegerField(
+    stock = models.BigIntegerField(
         verbose_name=_("Stock")
     )
 
-    actual_stock = models.IntegerField(
+    actual_stock = models.BigIntegerField(
         verbose_name=_("Actual Stock")
     )
 
