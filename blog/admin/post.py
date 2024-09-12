@@ -1,11 +1,12 @@
 from django.contrib import admin
-
-
 from blog.models.post import Post
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    """
+    Admin interface for managing posts.
+    """
     list_display = ('title', 'author', 'status', 'category', 'published_date', 'created', 'modified')
     search_fields = ('title', 'slug', 'content')
     list_filter = ('status', 'author', 'category', 'published_date')

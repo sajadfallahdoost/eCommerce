@@ -50,6 +50,8 @@ class Post(TimestampMixin, TitleSlugMixin, PictureOperationAbstract):
         help_text=_("The date and time when the post was published.")
     )
 
+    
+
     class Meta:
         verbose_name = _("Post")
         verbose_name_plural = _("Posts")

@@ -61,7 +61,7 @@ class BasketBusinessLogicLayer(models.Manager):
     
     # applying coupon check 
     '''
-    def apply_coupon(self, coupon, order, user, total_price):
+    
     def apply_coupon(self, coupon, order, user, total_price):
         if coupon:
             # discount_amount = round(

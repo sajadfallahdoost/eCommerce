@@ -5,6 +5,8 @@ import uuid
 from faker import Faker
 from tqdm import tqdm
 from django.utils.text import slugify
+from blog.models.post import Post
+from blog.models.category import Category
 from shop.models.cart import Cart
 from shop.models.order import Order
 from shop.models.order_address import OrderAddress
