@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from painless.models import TitleSlugMixin, TimestampMixin, PictureOperationAbstract
-from blog.models.category import Category
+
 
 class Post(TimestampMixin, TitleSlugMixin, PictureOperationAbstract):
     STATUS_CHOICES = [

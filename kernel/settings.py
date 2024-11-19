@@ -245,6 +245,26 @@ EMAIL_HOST_PASSWORD = 'qblg uvce gdzg frzc'
 #         },
 #     },
 # }
+# settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'admin_activity.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 
 AZ_IRANIAN_BANK_GATEWAYS = {
